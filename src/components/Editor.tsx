@@ -44,14 +44,14 @@ export default function EditorComponent() {
       <div className="editor-footer">
         <button 
           onClick={() => editor.undo()}
-          disabled={editorState.history?.undoStack?.length === 0}
+          disabled={!editor.canUndo()}
           className="footer-button"
         >
           撤销
         </button>
         <button 
           onClick={() => editor.redo()}
-          disabled={editorState.history?.redoStack?.length === 0}
+          disabled={!editor.canRedo()}
           className="footer-button"
         >
           重做

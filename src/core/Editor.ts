@@ -90,4 +90,14 @@ export class Editor implements EditorInterface {
     this.state = updater({...this.state});
     this.notifyStateChange();
   }
+
+  // 检查是否可以撤销
+  canUndo(): boolean {
+    return this.history.undoStack.length > 0;
+  }
+
+  // 检查是否可以重做
+  canRedo(): boolean {
+    return this.history.redoStack.length > 0;
+  }
 }
