@@ -1,32 +1,35 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+// src/pages/index.tsx
+import { useEffect } from "react";
 import { editor } from '../core';
-import { RemoveBackgroundPlugin, AddTextPlugin } from '../plugins';
-import EditorComponent from '../components/Editor';
+import { 
+  BackgroundPlugin,
+  AddTextPlugin 
+} from '../plugins';
+import MobileEditor from '../components/MobileEditor';
 import '../styles/text-plugin.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-function registerPlugins() {
-  editor.registerPlugin(new RemoveBackgroundPlugin());
-  editor.registerPlugin(new AddTextPlugin());
-  // 注册其他插件...
-}
-
 export default function Home() {
-  registerPlugins();
+  // Register plugins on initial render
+  useEffect(() => {
+    // Make sure plugins are only registered once
+    editor.registerPlugin(new BackgroundPlugin());
+    editor.registerPlugin(new AddTextPlugin());
+    
+    // Initialize editor with a mobile-friendly canvas size
+    editor.updateState(state => ({
+      ...state,
+      canvas: {
+        ...state.canvas,
+        width: 375, // Mobile width
+        height: 600, // Mobile height
+        background: '#ffffff'
+      }
+    }));
+  }, []);
 
   return (
-    <div className="flex justify-center">
-      <EditorComponent />
+    <div className="bg-gray-100 min-h-screen">
+      <MobileEditor />
     </div>
   );
 }

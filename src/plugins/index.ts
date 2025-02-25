@@ -1,3 +1,3 @@
 // src/plugins/index.ts - 导出所有插件
-export { RemoveBackgroundPlugin } from './RemoveBackgroundPlugin';
+export { BackgroundPlugin } from './BackgroundPlugin';
 export { AddTextPlugin } from './AddTextPlugin';
